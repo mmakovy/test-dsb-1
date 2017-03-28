@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<vdb name="Books_tableVDB" version="1">
+
+
+<model name="views" type="VIRTUAL">
+<metadata type="DDL">
+<![CDATA[CREATE VIEW Books_tableView (
+	ISBN string,
+	TITLE string,
+	SUBTITLE string,
+	PUBLISHER bigdecimal,
+	PUBLISH_YEAR bigdecimal,
+	EDITION bigdecimal,
+	TYPE string,
+	PRIMARY KEY(ISBN)
+)
+AS
+SELECT ISBN, TITLE, SUBTITLE, PUBLISHER, PUBLISH_YEAR, EDITION, TYPE FROM BOOKS;
+]]>
+
+</metadata>
+</model>
+<model name="Oracle11_Books" type="PHYSICAL">
+<source name="Oracle11g_Books" translator-name="oracle" connection-jndi-name="java:/Oracle11g_Books"/>
+<metadata type="DDL">
+<![CDATA[CREATE FOREIGN TABLE BOOKS (
+	ISBN string(255) NOT NULL OPTIONS ("NAMEINSOURCE" '"ISBN"', "NATIVE_TYPE" 'VARCHAR2'),
+	TITLE string(255) OPTIONS ("NAMEINSOURCE" '"TITLE"', "NATIVE_TYPE" 'VARCHAR2'),
+	SUBTITLE string(255) OPTIONS ("NAMEINSOURCE" '"SUBTITLE"', "NATIVE_TYPE" 'VARCHAR2'),
+	PUBLISHER bigdecimal(10) OPTIONS ("NAMEINSOURCE" '"PUBLISHER"', "NATIVE_TYPE" 'NUMBER', "CHAR_OCTET_LENGTH" '22'),
+	PUBLISH_YEAR bigdecimal(10) OPTIONS ("NAMEINSOURCE" '"PUBLISH_YEAR"', "NATIVE_TYPE" 'NUMBER', "CHAR_OCTET_LENGTH" '22'),
+	EDITION bigdecimal(10) OPTIONS ("NAMEINSOURCE" '"EDITION"', "NATIVE_TYPE" 'NUMBER', "CHAR_OCTET_LENGTH" '22'),
+	TYPE string(255) OPTIONS ("NAMEINSOURCE" '"TYPE"', "NATIVE_TYPE" 'VARCHAR2')
+) OPTIONS ("UPDATABLE" 'TRUE', "NAMEINSOURCE" '"BOOKS"', "CARDINALITY" '41');
+]]>
+
+</metadata>
+</model>
+
+</vdb>
